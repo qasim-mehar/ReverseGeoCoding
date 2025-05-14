@@ -9,12 +9,12 @@ const myCountry=async function() {
     return data.results[0].formatted.split(",")[4];
     
 }
-// const fetchCountryInfo=async function() {
-//     let country=await myCountry();
-//     // console.log(countryName);
-//     const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
-//     const [data]= await res.json();
-// }
+const fetchCountryInfo=async function() {
+    let country=await myCountry();
+    // console.log(countryName);
+    const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+    const [data]= await res.json();
+}
 // myCountry();
 // fetchCountryInfo();
 // myCountry();
