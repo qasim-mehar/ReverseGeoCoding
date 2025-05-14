@@ -1,11 +1,20 @@
 "strict mode"
-// const country=prompt("Write country name: ");
-// https://geocode.xyz/31.5497,74.3436?geoit=json
-// https://restcountries.com/v3.1/name/wnk
+
 
 const myCountry=async function() {
-    const res = await fetch(`https://geocode.xyz/31.5497,74.3436?geoit=json`);
+    const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=28.6139%2C+77.2090&key=${apiKey}`);
+    console.log(res)
     const data =await res.json();
-    return data.myCountry;
+    console.log(data.results[0].formatted.split(",")[4]);
+    return data.results[0].formatted.split(",")[4];
+    
 }
-myCountry();
+// const fetchCountryInfo=async function() {
+//     let country=await myCountry();
+//     // console.log(countryName);
+//     const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+//     const [data]= await res.json();
+// }
+// myCountry();
+// fetchCountryInfo();
+// myCountry();
