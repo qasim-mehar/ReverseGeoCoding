@@ -16,7 +16,7 @@ The application takes geographical coordinates (latitude and longitude) and:
     Renders a beautiful card with key information about the country
 
 🌠 Preview
-<p align="center"> <img src="\src\Screenshot 2025-05-15 003331.png" alt="ReverseGeoCode Country Card"> </p>
+<p align="center"> <img src="\src\Screenshot 2025-05-16 105004.png" alt="ReverseGeoCode Country Card"> </p>
 
 ## 🧠 Learning Objectives Achieved
 
