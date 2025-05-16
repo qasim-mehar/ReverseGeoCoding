@@ -1,7 +1,33 @@
 "strict mode"
 const card=document.querySelector(".card");
-
+const btnWhereAmI=document.querySelector(".btn");
+const inputLatitude=document.querySelector("#latitude");
+const inputLongitude=document.querySelector("#longitude");
 const apiKey= "f5ebdd83600e4f5799c82ab1ce50c615";
+//Helper Function
+
+//Toasts
+const showToast = (msg, type = "info") => {
+  const colors = {
+    success: "linear-gradient(to right, #4caf50, #2e7d32)",
+    error: "linear-gradient(to right, #f44336, #d32f2f)",
+    info: "linear-gradient(to right, #2196f3, #1976d2)"
+  };
+
+  Toastify({
+    text: msg,
+    duration: 3000,
+    gravity: "bottom",
+    position: "right",
+    close: true,
+    style: {
+      background: colors[type],
+      color: "white"
+    }
+  }).showToast();
+};
+
+//Population format
 const formatPopulation =function(pop){
     if (pop >= 1_000_000_000) {
         return ( (pop / 1_000_000_000).toFixed(2) + ' B');
@@ -12,9 +38,12 @@ const formatPopulation =function(pop){
     }
 }
 
+
+//geting countryData JSON data from fetchCountryInfo fn and Rendering a country card on page
 const renderCountryCard =function(countryData){
-    const countryName=countryData.name.common;
-    const capitalCity=countryData.capital?.[0] || "N/A";
+ 
+    const countryName=countryData?.name?.common;
+    const capitalCity=countryData?.capital?.[0] || "N/A";
     const area=countryData.area;
     const flag =countryData.flags.png;
     const alt=countryData.flags.alt;
@@ -57,14 +86,14 @@ const renderCountryCard =function(countryData){
         
         <div class="info-item">
           <div class="info-label">Language</div>
-          <div class="info-value">${firstLang } ${secondLang?secondLang: "N/A"}</div>
+          <div class="info-value">${firstLang } , ${secondLang?secondLang: "N/A"}</div>
         </div>
       </div>
       
       <div style="margin-top: 20px;">
         <div class="info-label">Geography</div>
         <div class="tags-container">
-          <span class="tag"><i class="fas fa-mountain mr-1"></i> Mountainous</span>
+          <span class="tag"><i class="fas fa-star mr-1"></i> ${countryData.unMember?"UN Member": "Not a UN Member"}</span>
           <span class="tag"><i class="fas fa-water mr-1"></i> ${countryData.landlocked?"Landlocked":"coastal"}</span>
           <span class="tag"><i class="fas fa-globe-asia mr-1"></i> ${region}</span>
         </div>
@@ -79,25 +108,28 @@ const renderCountryCard =function(countryData){
 
 }
 
+//Reverse coding fn which takes coardinates and fetch country's data from an API 
 const myCountry=async function(lat, lng) {
    try{ 
     const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}%2C+${lng}&key=${apiKey}`);
     console.log(res);
 
     if(!res.ok){
-        throw new Error("Too much request, try after somethime!!")
+        throw new Error("Too much request myCountry, try after somethime!!")
     }
     const data =await res.json();
     // console.log(data);
-    console.log(data.results[0].formatted.split(",").at(-1))
+    console.log(data.results[0]?.formatted?.split(",")?.at(-1))
     // console.log(data.results[0]?.formatted?.split(",").at(-1));
     return data.results[0].formatted.split(",").at(-1);
   }
   catch(err){
-    alert(err.message);
+    showToast(err.message,"error");
   }
     
 }
+
+//Its just getting country data (Country name precisely) and fetching info about specific country and passing that data to renderCountryCard as an aurgument so that renderCountryCard render country card on screen.
 const fetchCountryInfo=async function(lat, lng) {
     try{
     let country=await myCountry(lat,lng);
@@ -105,19 +137,27 @@ const fetchCountryInfo=async function(lat, lng) {
     const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
     // console.log(res);
     if(!res.ok){
-        throw new Error("Too much request, try after somethime!!")
+        throw new Error("Too much request in fetchCountryInfo, try after somethime!!")
     }
     const [data]= await res.json();
     console.log(data);
     renderCountryCard(data);
    }
    catch(err){
-   alert(err.message);
+    showToast(err.message,"error");
    }
 }
-// fetchCountryInfo(31.5497, 74.3436); // Lahore, Pakistan
-// fetchCountryInfo(48.8566, 2.3522);  // Paris, France
-// fetchCountryInfo(35.6895, 139.6917); // Tokyo, Japan
-fetchCountryInfo(-33.8688, 151.2093); // Sydney, Australia
-// fetchCountryInfo(40.7128, -74.0060);  // New York, USA
-// fetchCountryInfo(-1.2921, 36.8219);   // Nairobi, Kenya
+
+//It's just a simple function which is using for an event listener. It simply passing coardinates values from text fields to  fetchCountryInfo fn so that fetchCountryInfo fn can fetch data related that cooardinateds
+const whereAmI=function(e){
+  e.preventDefault();
+  card.innerHTML="Loading..."
+  fetchCountryInfo(inputLatitude.value,inputLongitude.value);
+}
+btnWhereAmI.addEventListener("click",whereAmI);
+// 31.5497, 74.3436 // Lahore, Pakistan
+// 48.8566, 2.3522  // Paris, France
+// 35.6895, 139.6917// Tokyo, Japan
+//-33.8688, 151.2093 // Sydney, Australia
+// 40.7128, -74.0060  // New York, USA
+// -1.2921, 36.8219 // Nairobi, Kenya/
