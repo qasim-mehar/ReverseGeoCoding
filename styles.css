@@ -10,6 +10,7 @@ body {
   min-height: 100vh;
   background: #f0f4f8;
   padding-top: 80px;
+  overflow: hidden;
 }
 
 .top-bar {
@@ -19,6 +20,7 @@ body {
   top: 0;
   width: 100%;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .container {
@@ -41,7 +43,7 @@ body {
   flex: 1;
   display: flex;
   gap: 0.5rem;
-  background: rgba(255,255,255,0.2);
+  background: hsla(0, 0%, 100%, 0.605);
   padding: 0.5rem;
   border-radius: 0.5rem;
   backdrop-filter: blur(4px);
