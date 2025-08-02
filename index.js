@@ -112,15 +112,12 @@ const renderCountryCard =function(countryData){
 const myCountry=async function(lat, lng) {
    try{ 
     const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}%2C+${lng}&key=${apiKey}`);
-    console.log(res);
+   
 
     if(!res.ok){
-        throw new Error("Too much request myCountry, try after somethime!!")
+        throw new Error("Too much requests, try after sometime!!")
     }
     const data =await res.json();
-    // console.log(data);
-    console.log(data.results[0]?.formatted?.split(",")?.at(-1))
-    // console.log(data.results[0]?.formatted?.split(",").at(-1));
     return data.results[0].formatted.split(",").at(-1);
   }
   catch(err){
@@ -132,28 +129,51 @@ const myCountry=async function(lat, lng) {
 //Its just getting country data (Country name precisely) and fetching info about specific country and passing that data to renderCountryCard as an aurgument so that renderCountryCard render country card on screen.
 const fetchCountryInfo=async function(lat, lng) {
     try{
+
+    
     let country=await myCountry(lat,lng);
-    console.log(country);
+    // console.log(country);
     const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
     // console.log(res);
     if(!res.ok){
-        throw new Error("Too much request in fetchCountryInfo, try after somethime!!")
+        throw new Error("Too much requests, try after sometime!!")
     }
     const [data]= await res.json();
-    console.log(data);
+    // console.log(data);
     renderCountryCard(data);
    }
    catch(err){
     showToast(err.message,"error");
    }
 }
-
+//this function simply collect users coadinates 
+const detectUserCountry = function () {
+  showToast("Accept location access only if you don't want to use coordinates","info");
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        showToast("You accepted location your location access", "success")
+        const {latitude, longitude} = pos.coords;
+        
+        
+        fetchCountryInfo(latitude, longitude);
+      },
+      () => {
+        showToast("You denied location access", "error")
+        
+      }
+    );
+  } else {
+    showToast("Your Geolocation not supported", "error");
+  }
+};
 //It's just a simple function which is using for an event listener. It simply passing coardinates values from text fields to  fetchCountryInfo fn so that fetchCountryInfo fn can fetch data related that cooardinateds
 const whereAmI=function(e){
   e.preventDefault();
-  card.innerHTML="Loading..."
-  fetchCountryInfo(inputLatitude.value,inputLongitude.value);
-}
+  card.innerHTML= "  Getting information...  "
+    fetchCountryInfo(inputLatitude.value,inputLongitude.value);
+  }
+
 btnWhereAmI.addEventListener("click",whereAmI);
 // 31.5497, 74.3436 // Lahore, Pakistan
 // 48.8566, 2.3522  // Paris, France
