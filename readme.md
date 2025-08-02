@@ -17,8 +17,8 @@ The application takes geographical coordinates (latitude and longitude) and:
     Lets users auto-detect their location via the browser’s Geolocation API if they don’t want to manually enter coordinates
 
 🌠 Preview
-<p align="center"> <img src="\src\Screenshot 2025-05-16 105004.png" alt="ReverseGeoCode Country Card"> </p>
-
+<p align="center"> <img src="src\Screenshot 2025-08-03 at 04-30-19 Modern Country Card.png" alt="ReverseGeoCode Country Card"> </p>
+C:\Users\mianq\Web-Projects\ReverseGeoCoding\src\
 ##  Learning Objectives Achieved
 
 ### 1. Asynchronous JavaScript
