@@ -3,9 +3,9 @@
 
 ReverseGeoCode is an interactive web application that lets users discover detailed information about countries based on geographical coordinates. This project was developed primarily as a learning exercise for:
 
-    📡 Asynchronous JavaScript
-    🚨 Error Handling
-    🔌 Working with External APIs
+     Asynchronous JavaScript
+     Error Handling
+     Working with External APIs
 
 ⚙️ Core Functionality
 
@@ -14,11 +14,12 @@ The application takes geographical coordinates (latitude and longitude) and:
     Converts coordinates to a country name using the OpenCage Geocoding API
     Fetches detailed country information from the REST Countries API
     Renders a beautiful card with key information about the country
+    Lets users auto-detect their location via the browser’s Geolocation API if they don’t want to manually enter coordinates
 
 🌠 Preview
 <p align="center"> <img src="\src\Screenshot 2025-05-16 105004.png" alt="ReverseGeoCode Country Card"> </p>
 
-## 🧠 Learning Objectives Achieved
+##  Learning Objectives Achieved
 
 ### 1. Asynchronous JavaScript
 ```javascript
@@ -57,10 +58,10 @@ try {
 
 | API | Purpose | Implementation |
 |-----|---------|---------------|
-| 🌏 **OpenCage Geocoding API** | Converting coordinates to location data | Reverse geocoding to get country name |
-| 🏳️ **REST Countries API** | Fetching detailed country information | Getting flags, population, languages, etc. |
+|  **OpenCage Geocoding API** | Converting coordinates to location data | Reverse geocoding to get country name |
+|  **REST Countries API** | Fetching detailed country information | Getting flags, population, languages, etc. |
 
-## 🔄 API Workflow
+##  API Workflow
 ```mermaid
 graph TD
     A[User Inputs Coordinates] --> B[Call OpenCage API]
@@ -73,7 +74,7 @@ graph TD
     G -->|No| I[Error Handling]
     H --> J[Render Country Card]
 ```
-📚 Resources Used
+ Resources Used
 
     JavaScript Async/Await Documentation
     Fetch API Guide
