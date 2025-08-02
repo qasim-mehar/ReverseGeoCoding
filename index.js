@@ -118,6 +118,7 @@ const myCountry=async function(lat, lng) {
         throw new Error("Too much requests, try after sometime!!")
     }
     const data =await res.json();
+
     return data.results[0].formatted.split(",").at(-1);
   }
   catch(err){
@@ -146,7 +147,6 @@ const fetchCountryInfo=async function(lat, lng) {
     showToast(err.message,"error");
    }
 }
-//this function simply collect users coadinates 
 const detectUserCountry = function () {
   showToast("Accept location access only if you don't want to use coordinates","info");
   if (navigator.geolocation) {
@@ -171,8 +171,15 @@ const detectUserCountry = function () {
 const whereAmI=function(e){
   e.preventDefault();
   card.innerHTML= "  Getting information...  "
+   
+  if(inputLatitude.value&&inputLongitude.value){
+    
     fetchCountryInfo(inputLatitude.value,inputLongitude.value);
+  }else{
+      detectUserCountry();
   }
+ 
+}
 
 btnWhereAmI.addEventListener("click",whereAmI);
 // 31.5497, 74.3436 // Lahore, Pakistan
