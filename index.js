@@ -130,8 +130,7 @@ const myCountry=async function(lat, lng) {
 //Its just getting country data (Country name precisely) and fetching info about specific country and passing that data to renderCountryCard as an aurgument so that renderCountryCard render country card on screen.
 const fetchCountryInfo=async function(lat, lng) {
     try{
-
-    
+      card.innerHTML= "  Getting information...  "
     let country=await myCountry(lat,lng);
     // console.log(country);
     const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
@@ -154,8 +153,6 @@ const detectUserCountry = function () {
       (pos) => {
         showToast("You accepted location your location access", "success")
         const {latitude, longitude} = pos.coords;
-        
-        
         fetchCountryInfo(latitude, longitude);
       },
       () => {
@@ -170,12 +167,12 @@ const detectUserCountry = function () {
 //It's just a simple function which is using for an event listener. It simply passing coardinates values from text fields to  fetchCountryInfo fn so that fetchCountryInfo fn can fetch data related that cooardinateds
 const whereAmI=function(e){
   e.preventDefault();
-  card.innerHTML= "  Getting information...  "
-   
+  
   if(inputLatitude.value&&inputLongitude.value){
-    
+    // card.innerHTML= "  Getting information...  "
     fetchCountryInfo(inputLatitude.value,inputLongitude.value);
   }else{
+    
       detectUserCountry();
   }
  
